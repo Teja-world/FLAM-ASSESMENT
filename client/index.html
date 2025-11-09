@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Collaborative Canvas — Join</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body { background: linear-gradient(135deg,#0f172a,#1e293b); min-height:100vh; }
+  </style>
+</head>
+<body class="flex items-center justify-center">
+  <div class="bg-gray-900/80 text-white p-8 rounded-lg shadow-lg w-96">
+    <h1 class="text-2xl font-bold mb-3">🎨 Collaborative Canvas</h1>
+    <p class="text-gray-300 mb-4">Enter your name and choose a room to start collaborating!</p>
+
+    <form id="joinForm" class="space-y-4">
+      <div>
+        <label class="text-sm text-gray-400">Your Name</label>
+        <input id="username" class="w-full p-2 rounded bg-gray-800 border border-gray-700" required />
+      </div>
+
+      <div>
+        <label class="text-sm text-gray-400">Choose Room</label>
+        <select id="roomSelect" class="w-full p-2 rounded bg-gray-800 border border-gray-700">
+          <option value="main">Main</option>
+          <option value="teamA">Team A</option>
+          <option value="teamB">Team B</option>
+          <option value="teamC">Team C</option>
+        </select>
+      </div>
+
+      <button type="submit" class="w-full bg-blue-600 p-2 rounded hover:bg-blue-700">Join Canvas</button>
+    </form>
+  </div>
+
+  <script>
+    document.getElementById('joinForm').addEventListener('submit', e => {
+      e.preventDefault();
+      const name = document.getElementById('username').value.trim();
+      const room = document.getElementById('roomSelect').value;
+      if (!name) return alert('Enter your name');
+      localStorage.setItem('username', name);
+      localStorage.setItem('room', room);
+      location.href = '/canvas.html';
+    });
+  </script>
+</body>
+</html>

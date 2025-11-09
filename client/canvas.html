@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Collaborative Canvas</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    html, body {
+      margin: 0;
+      height: 100%;
+      overflow: hidden;
+      background: #0f172a;
+      color: white;
+    }
+    #canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      background: white;
+      z-index: 1;
+    }
+    .ui-panel {
+      background: rgba(17, 24, 39, 0.95);
+      padding: 10px;
+      border-radius: 8px;
+      z-index: 10;
+    }
+    .toolbar {
+      position: absolute;
+      top: 70px;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+    .sidebar {
+      position: absolute;
+      right: 15px;
+      top: 70px;
+      width: 220px;
+    }
+    .chatbox {
+      position: absolute;
+      left: 15px;
+      bottom: 15px;
+      width: 300px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 🔹 Navigation Bar -->
+  <nav class="bg-gray-900 flex justify-between items-center px-6 py-3 shadow-lg">
+    <div class="flex items-center gap-2">
+      <span class="text-2xl">🎨</span>
+      <h1 class="text-lg font-semibold">Collaborative Canvas</h1>
+      <span id="roomLabel" class="ml-4 text-sm text-blue-400"></span>
+    </div>
+    <div>
+      <span id="status" class="text-sm text-green-400">Connecting...</span>
+    </div>
+  </nav>
+
+  <!-- 🔹 Canvas Element -->
+  <canvas id="canvas"></canvas>
+
+  <!-- 🔹 Toolbar -->
+  <div class="toolbar ui-panel flex gap-2 items-center">
+    <button id="brushBtn" class="bg-blue-600 px-3 py-1 rounded">Brush</button>
+    <button id="eraserBtn" class="bg-gray-600 px-3 py-1 rounded">Eraser</button>
+    <input id="colorPicker" type="color" value="#000000" class="h-8 w-10 border-0" />
+    <input id="widthRange" type="range" min="1" max="60" value="4" />
+    <button id="undoBtn" class="bg-yellow-400 px-2 py-1 rounded">Undo</button>
+    <button id="redoBtn" class="bg-green-400 px-2 py-1 rounded">Redo</button>
+    <button id="clearBtn" class="bg-red-500 px-2 py-1 rounded">Clear</button>
+    <button id="saveBtn" class="bg-purple-600 px-2 py-1 rounded">Save</button>
+    <button id="loadBtn" class="bg-teal-600 px-2 py-1 rounded">Load</button>
+    <button id="downloadBtn" class="bg-pink-500 px-2 py-1 rounded">Download</button>
+  </div>
+
+  <!-- 🔹 Online Users -->
+  <div class="sidebar ui-panel">
+    <h3 class="text-sm font-semibold mb-2">🟢 Online Users</h3>
+    <ul id="usersList" class="text-sm space-y-1"></ul>
+  </div>
+
+  <!-- 🔹 Chat Box -->
+  <div class="chatbox ui-panel flex flex-col">
+    <div id="chatMessages" class="flex-1 h-40 overflow-y-auto text-sm mb-2"></div>
+    <input id="chatInput" placeholder="Type a message..." class="w-full p-2 rounded bg-gray-700 text-white" />
+  </div>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
